@@ -7,7 +7,7 @@
     "Abaqus with odbAccess",
     "Abaqus command accessible as 'abaqus'"
   ],
-  "launch": "Launch_Abaqus_Data_Exporter.vbs",
+  "launch": "Launch_ODB2VTU-S_Exporter.vbs",
   "auto_output": {
     "folder_name": "ODB2VTU_Output",
     "behavior": "Automatically created next to the selected ODB."

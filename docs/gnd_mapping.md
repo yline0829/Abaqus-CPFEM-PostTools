@@ -1,4 +1,4 @@
-# GND mapping used by the current CPFEM workflow
+# ODB2VTU-S — GND mapping used by the current CPFEM workflow
 
 The GND feature is **not a generic Abaqus convention**. It follows the current UMAT/data layout used by this project.
 

@@ -1,4 +1,6 @@
-# Abaqus-CPFEM Selective PostTools
+# ODB2VTU-S
+
+### Selective Abaqus ODB to ParaView & CPFEM Post-Processing Toolkit
 
 **English** | [简体中文](README.zh-CN.md)
 
@@ -31,14 +33,14 @@ The toolkit currently contains two complementary applications. The **S** in **OD
 
 | Application | Main purpose |
 |---|---|
-| **ODB2VTU Exporter** | Large-ODB selective ODB → VTU/PVD export, arbitrary Step/Frame field comparison, ParaView-ready fields, GrainID, Initial IPF, Mises, GND differences, grain-level extrema, and History/Curve data |
-| **CPFEM Postprocessor** | RP history extraction and frame-by-frame PEEQCP reconstruction/write-back using a physically matched StepTime sampling schedule |
+| **ODB2VTU-S Exporter** | Large-ODB selective ODB → VTU/PVD export, arbitrary Step/Frame field comparison, ParaView-ready fields, GrainID, Initial IPF, Mises, GND differences, grain-level extrema, and History/Curve data |
+| **ODB2VTU-S CPFEM Postprocessor** | RP history extraction and frame-by-frame PEEQCP reconstruction/write-back using a physically matched StepTime sampling schedule |
 
 ## Key capabilities
 
 ### Selective ODB → VTU/PVD instead of full-database conversion
 
-The Data Exporter is designed for large Abaqus ODB files. Users can select the **instance, grain/element region, Step, Frame, and Field Output** that are actually needed, then export only those states to ParaView-compatible VTU/PVD files. This avoids converting an entire multi-GB or multi-hundred-GB ODB when only a small set of physical states is required.
+ODB2VTU-S Exporter is designed for large Abaqus ODB files. Users can select the **instance, grain/element region, Step, Frame, and Field Output** that are actually needed, then export only those states to ParaView-compatible VTU/PVD files. This avoids converting an entire multi-GB or multi-hundred-GB ODB when only a small set of physical states is required.
 
 ### Arbitrary Step/Frame time-series construction
 
@@ -100,7 +102,7 @@ Exported PVD/VTU data can be opened directly in ParaView. The example below show
 
 ### 4. ParaView — initial crystallographic orientation
 
-The Data Exporter can reconstruct the initial grain orientation from per-grain material Euler angles in the INP and export an HCP-Ti IPF-related field for ParaView visualization.
+ODB2VTU-S Exporter can reconstruct the initial grain orientation from per-grain material Euler angles in the INP and export an HCP-Ti IPF-related field for ParaView visualization.
 
 <p align="center">
   <img src="docs/images/paraview-initial-ipf.png" width="95%" alt="ParaView initial IPF visualization">

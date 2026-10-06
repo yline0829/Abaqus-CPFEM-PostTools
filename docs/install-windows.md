@@ -5,7 +5,7 @@
 Use the Windows portable release and launch:
 
 ```text
-Launch_Abaqus_Data_Exporter.vbs
+Launch_ODB2VTU-S_Exporter.vbs
 ```
 
 Abaqus must be callable from Command Prompt, normally as `abaqus`.
@@ -15,7 +15,7 @@ Abaqus must be callable from Command Prompt, normally as `abaqus`.
 Launch:
 
 ```text
-Launch_Abaqus_Postprocess_GUI.bat
+Launch_ODB2VTU-S_CPFEM_Postprocessor.bat
 ```
 
 The GUI calls `abaqus python abaqus_postprocess_master.py ...`.

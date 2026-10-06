@@ -1,4 +1,6 @@
-# Abaqus-CPFEM Selective PostTools
+# ODB2VTU-S
+
+### 面向大型 Abaqus ODB 的选择性 ParaView 导出与 CPFEM 后处理工具集
 
 [English](README.md) | **简体中文**
 
@@ -31,14 +33,14 @@
 
 | 程序 | 主要用途 |
 |---|---|
-| **ODB2VTU Exporter** | 面向大型 ODB 的选择性 ODB → VTU/PVD 导出、任意 Step/Frame 场变量比较、ParaView 场变量、GrainID、Initial IPF、Mises、GND 差值、晶粒极值分析以及 History/Curve 数据 |
-| **CPFEM Postprocessor** | RP 时历数据提取，以及基于物理时间匹配的 PEEQCP 逐帧重构、目标帧保存与写回 |
+| **ODB2VTU-S Exporter** | 面向大型 ODB 的选择性 ODB → VTU/PVD 导出、任意 Step/Frame 场变量比较、ParaView 场变量、GrainID、Initial IPF、Mises、GND 差值、晶粒极值分析以及 History/Curve 数据 |
+| **ODB2VTU-S CPFEM Postprocessor** | RP 时历数据提取，以及基于物理时间匹配的 PEEQCP 逐帧重构、目标帧保存与写回 |
 
 ## 核心特色
 
 ### 选择性 ODB → VTU/PVD，而不是整库转换
 
-Data Exporter 面向大型 Abaqus ODB。用户可以只选择真正需要的 **Instance、晶粒/单元区域、Step、Frame 和 Field Output**，然后仅把这些状态导出成 ParaView 可直接读取的 VTU/PVD。对于几十 GB、上百 GB 的 ODB，不需要为了看少量关键状态而把整个数据库全部转换。
+ODB2VTU-S Exporter 面向大型 Abaqus ODB。用户可以只选择真正需要的 **Instance、晶粒/单元区域、Step、Frame 和 Field Output**，然后仅把这些状态导出成 ParaView 可直接读取的 VTU/PVD。对于几十 GB、上百 GB 的 ODB，不需要为了看少量关键状态而把整个数据库全部转换。
 
 ### 任意 Step/Frame 组合成 ParaView 时间序列
 
@@ -100,7 +102,7 @@ PEEQCP 仍遍历全部存储帧进行累积，但只保存具有明确物理意�
 
 ### 4. ParaView — 初始晶体学取向
 
-Data Exporter 可以根据 INP 中每个晶粒 Material 的 Euler 角重构初始晶粒取向，并输出与 HCP-Ti IPF 相关的 ParaView 场变量。
+ODB2VTU-S Exporter 可以根据 INP 中每个晶粒 Material 的 Euler 角重构初始晶粒取向，并输出与 HCP-Ti IPF 相关的 ParaView 场变量。
 
 <p align="center">
   <img src="docs/images/paraview-initial-ipf.png" width="95%" alt="ParaView 初始 IPF">
