@@ -23,36 +23,36 @@ if work.exists(): shutil.rmtree(work)
 work.mkdir()
 
 # Windows Data Exporter
-wde = work/'Abaqus_Data_Exporter_Windows_Portable'
+wde = work/'ODB2VTU-S_Exporter_Windows_Portable'
 reset(wde)
 cp_tree(ROOT/'src/data_exporter/windows', wde)
 cp_tree(ROOT/'src/data_exporter/backend', wde)
-zipdir(wde, DIST/f'Abaqus_Data_Exporter_Windows_Portable_v{VERSION}.zip')
+zipdir(wde, DIST/f'ODB2VTU-S_Exporter_Windows_Portable_v{VERSION}.zip')
 
 # Windows Postprocess
-wpp = work/'Abaqus_Postprocess_Windows_Portable'
+wpp = work/'ODB2VTU-S_CPFEM_Postprocessor_Windows_Portable'
 reset(wpp)
 cp_tree(ROOT/'src/postprocess/windows', wpp)
 cp_tree(ROOT/'src/postprocess/backend', wpp)
-zipdir(wpp, DIST/f'Abaqus_Postprocess_Windows_Portable_v{VERSION}.zip')
+zipdir(wpp, DIST/f'ODB2VTU-S_CPFEM_Postprocessor_Windows_Portable_v{VERSION}.zip')
 
 # Linux combined
-lin = work/'Abaqus_Linux_Tools'
+lin = work/'ODB2VTU-S_Linux_Tools'
 reset(lin)
-(lin/'Abaqus_Data_Exporter_Linux').mkdir()
-(lin/'Abaqus_Postprocess_Universal_Linux').mkdir()
-cp_tree(ROOT/'src/data_exporter/linux', lin/'Abaqus_Data_Exporter_Linux')
-cp_tree(ROOT/'src/data_exporter/backend', lin/'Abaqus_Data_Exporter_Linux')
-cp_tree(ROOT/'src/postprocess/linux', lin/'Abaqus_Postprocess_Universal_Linux')
-cp_tree(ROOT/'src/postprocess/backend', lin/'Abaqus_Postprocess_Universal_Linux')
+(lin/'ODB2VTU-S_Exporter_Linux').mkdir()
+(lin/'ODB2VTU-S_CPFEM_Postprocessor_Linux').mkdir()
+cp_tree(ROOT/'src/data_exporter/linux', lin/'ODB2VTU-S_Exporter_Linux')
+cp_tree(ROOT/'src/data_exporter/backend', lin/'ODB2VTU-S_Exporter_Linux')
+cp_tree(ROOT/'src/postprocess/linux', lin/'ODB2VTU-S_CPFEM_Postprocessor_Linux')
+cp_tree(ROOT/'src/postprocess/backend', lin/'ODB2VTU-S_CPFEM_Postprocessor_Linux')
 shutil.copy2(ROOT/'packaging/linux/install_clickable.sh', lin/'install_clickable.sh')
 shutil.copy2(ROOT/'packaging/linux/uninstall_clickable.sh', lin/'uninstall_clickable.sh')
 # The combined installer in release root uses its own directory as source root.
 text = (lin/'install_clickable.sh').read_text()
 text = text.replace('SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"', 'SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"')
-text = text.replace('$SRC/src/data_exporter/linux/.', '$SRC/Abaqus_Data_Exporter_Linux/.').replace('$SRC/src/data_exporter/backend/.', '$SRC/Abaqus_Data_Exporter_Linux/.')
-text = text.replace('$SRC/src/postprocess/linux/.', '$SRC/Abaqus_Postprocess_Universal_Linux/.').replace('$SRC/src/postprocess/backend/.', '$SRC/Abaqus_Postprocess_Universal_Linux/.')
+text = text.replace('$SRC/src/data_exporter/linux/.', '$SRC/ODB2VTU-S_Exporter_Linux/.').replace('$SRC/src/data_exporter/backend/.', '$SRC/ODB2VTU-S_Exporter_Linux/.')
+text = text.replace('$SRC/src/postprocess/linux/.', '$SRC/ODB2VTU-S_CPFEM_Postprocessor_Linux/.').replace('$SRC/src/postprocess/backend/.', '$SRC/ODB2VTU-S_CPFEM_Postprocessor_Linux/.')
 (lin/'install_clickable.sh').write_text(text)
 (lin/'install_clickable.sh').chmod(0o755); (lin/'uninstall_clickable.sh').chmod(0o755)
-zipdir(lin, DIST/f'Abaqus_Linux_Tools_v{VERSION}.zip')
+zipdir(lin, DIST/f'ODB2VTU-S_Linux_Tools_v{VERSION}.zip')
 print('Built release assets in', DIST)
