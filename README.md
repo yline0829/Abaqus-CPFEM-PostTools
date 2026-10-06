@@ -1,4 +1,4 @@
-# Abaqus-CPFEM-PostTools
+# Abaqus-CPFEM Selective PostTools
 
 **English** | [简体中文](README.zh-CN.md)
 
@@ -7,7 +7,7 @@
 ![Windows](https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)
 
-Cross-platform post-processing tools for **Abaqus/CPFEM**, focused on selective ODB extraction, ParaView visualization, grain-resolved field analysis, GND evolution, tribological history data, and PEEQCP reconstruction.
+**Selective post-processing for large Abaqus ODB files.** Cross-platform tools for **Abaqus/CPFEM**, focused on selective ODB extraction, ParaView visualization, grain-resolved field analysis, GND evolution, tribological history data, and PEEQCP reconstruction.
 
 > This project is independent of Dassault Systèmes. Abaqus is required to read/write ODB files; no Abaqus libraries or binaries are distributed here.
 
