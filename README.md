@@ -17,17 +17,17 @@ For most users, the recommended entry point is the **latest GitHub Release**:
 
 **[Download the latest release](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)**
 
-Available packages currently include:
+Available packages currently include (the existing v0.1.0 assets retain their original file names; future releases will use the ODB2VTU-S naming):
 
-- **Windows — Abaqus Data Exporter**
-- **Windows — Abaqus CPFEM Postprocess**
+- **Windows — ODB2VTU-S Exporter**
+- **Windows — ODB2VTU-S CPFEM Postprocessor**
 - **Linux — Combined Tools**
 
 The repository itself is the maintainable source tree; packaged ZIP files are distributed through **Releases**.
 
 ## Overview
 
-The toolkit currently contains two complementary applications:
+The toolkit currently contains two complementary applications. The **S** in **ODB2VTU-S** stands for **Selective**, emphasizing selective access to large ODB databases:
 
 | Application | Main purpose |
 |---|---|
@@ -74,20 +74,20 @@ If a target time is not stored exactly, the nearest actual ODB frame is selected
 
 ## Screenshots
 
-### 1. Abaqus Data Exporter
+### 1. ODB2VTU-S Exporter
 
 Select an ODB, instance, grain region, analysis steps, frames, and output variables. Multi-step ParaView time-series export supports arbitrary Step/Frame states without converting the entire ODB.
 
 <p align="center">
-  <img src="docs/images/data-exporter.png" width="95%" alt="Abaqus Data Exporter">
+  <img src="docs/images/odb2vtu-s-exporter.png" width="95%" alt="ODB2VTU-S Exporter">
 </p>
 
-### 2. Abaqus CPFEM Postprocess
+### 2. ODB2VTU-S CPFEM Postprocessor
 
 The CPFEM utility handles RP history data and PEEQCP reconstruction. PEEQCP is accumulated through all stored frames while selected physical states are retained for comparison and optional write-back.
 
 <p align="center">
-  <img src="docs/images/cpfem-postprocess.png" width="72%" alt="Abaqus CPFEM Postprocess">
+  <img src="docs/images/odb2vtu-s-cpfem-postprocessor.png" width="72%" alt="ODB2VTU-S CPFEM Postprocessor">
 </p>
 
 ### 3. ParaView — reconstructed PEEQCP
@@ -108,7 +108,7 @@ The Data Exporter can reconstruct the initial grain orientation from per-grain m
 
 ## Applications
 
-### Abaqus Data Exporter
+### ODB2VTU-S Exporter
 
 - Selective ODB → **VTU/PVD** export for ParaView
 - Large-ODB workflow: read only selected instances, sets, steps, frames, and fields
@@ -121,7 +121,7 @@ The Data Exporter can reconstruct the initial grain orientation from per-grain m
 - 18-slip-system GND evolution from `gnd_field.dat` vs. `SDV11–SDV28`
 - Sliding-start GND increment using the first sliding frame or the previous step's last frame as reference
 
-### Abaqus CPFEM Postprocess
+### ODB2VTU-S CPFEM Postprocessor
 
 - RP history extraction: `U1/U2`, `RF1/RF2`, `CF1/CF2`, COF
 - Frame-by-frame PEEQCP reconstruction from `Fp = SDV1–SDV9`

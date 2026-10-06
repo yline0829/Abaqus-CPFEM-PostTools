@@ -17,17 +17,17 @@
 
 **[下载最新版本](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)**
 
-当前提供：
+当前提供（现有 v0.1.0 Release 仍保留首次发布时的旧文件名；后续版本将统一采用 ODB2VTU-S 命名）：
 
-- **Windows — Abaqus Data Exporter 数据导出器**
-- **Windows — Abaqus CPFEM Postprocess 后处理工具**
+- **Windows — ODB2VTU-S Exporter 数据导出器**
+- **Windows — ODB2VTU-S CPFEM Postprocessor**
 - **Linux — 两个工具的整合版本**
 
 仓库本身主要用于源码维护；普通用户使用的 ZIP 包统一通过 **Releases** 发布。
 
 ## 项目概览
 
-目前工具集包含两个互补的小程序：
+目前工具集包含两个互补的小程序。**ODB2VTU-S** 中的 **S = Selective（选择性）**，强调针对大型 ODB 只读取和导出真正需要的数据：
 
 | 程序 | 主要用途 |
 |---|---|
@@ -74,20 +74,20 @@ PEEQCP 仍遍历全部存储帧进行累积，但只保存具有明确物理意�
 
 ## 软件截图
 
-### 1. Abaqus Data Exporter 数据导出器
+### 1. ODB2VTU-S Exporter 数据导出器
 
 可选择 ODB、实例、晶粒区域、分析步、帧以及需要导出的场变量。支持多分析步的 ParaView 时间序列导出，不需要把整个大型 ODB 全部转换。
 
 <p align="center">
-  <img src="docs/images/data-exporter.png" width="95%" alt="Abaqus 数据导出器">
+  <img src="docs/images/odb2vtu-s-exporter.png" width="95%" alt="Abaqus 数据导出器">
 </p>
 
-### 2. Abaqus CPFEM Postprocess
+### 2. ODB2VTU-S CPFEM Postprocessor
 
 用于 RP 时历数据以及 PEEQCP 重构。PEEQCP 仍然遍历全部存储帧进行累积，但只保存选定的物理状态，用于后续对比或写回 ODB。
 
 <p align="center">
-  <img src="docs/images/cpfem-postprocess.png" width="72%" alt="Abaqus CPFEM 后处理">
+  <img src="docs/images/odb2vtu-s-cpfem-postprocessor.png" width="72%" alt="Abaqus CPFEM 后处理">
 </p>
 
 ### 3. ParaView — 重构 PEEQCP
@@ -108,7 +108,7 @@ Data Exporter 可以根据 INP 中每个晶粒 Material 的 Euler 角重构初�
 
 ## 功能
 
-### Abaqus Data Exporter
+### ODB2VTU-S Exporter
 
 - ODB → **VTU/PVD** 选择性导出，用于 ParaView
 - 面向大型 ODB：只读取选定实例、集合、分析步、帧和场变量
@@ -121,7 +121,7 @@ Data Exporter 可以根据 INP 中每个晶粒 Material 的 Euler 角重构初�
 - 基于 `gnd_field.dat` 与 `SDV11–SDV28` 的 **18 个滑移系 GND 演化**
 - 以首次滑动帧或前一分析步末帧为基准的滑动阶段 GND 增量
 
-### Abaqus CPFEM Postprocess
+### ODB2VTU-S CPFEM Postprocessor
 
 - RP 时历提取：`U1/U2`、`RF1/RF2`、`CF1/CF2`、COF
 - 根据 `Fp = SDV1–SDV9` 进行逐帧 PEEQCP 重构
