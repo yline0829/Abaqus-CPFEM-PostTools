@@ -1,0 +1,43 @@
+# Abaqus result and lock files
+*.odb
+*.lck
+*.sim
+*.res
+*.prt
+*.sta
+*.msg
+*.com
+*.mdl
+*.stt
+*.ipm
+*.pac
+*.sel
+*.abq
+
+# Large simulation / visualization outputs
+*.vtu
+*.pvd
+*.vtk
+*.pvtu
+*_series_frames/
+*PEEQCP_EXPORT/
+*RP_EXPORT/
+ADE_Output/
+
+# User/project data
+*.inp
+*.dat
+!examples/*.dat
+
+# Runtime/cache
+.ade_runtime/
+__pycache__/
+*.pyc
+.build/
+dist/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

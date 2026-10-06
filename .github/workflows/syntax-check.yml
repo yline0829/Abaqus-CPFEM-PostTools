@@ -1,0 +1,37 @@
+name: Syntax checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  python-and-shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Compile Python sources
+        run: |
+          python - <<'PY'
+          import pathlib
+          for p in pathlib.Path('src').rglob('*.py'):
+              compile(p.read_text(encoding='utf-8'), str(p), 'exec')
+              print('OK', p)
+          PY
+      - name: Check shell syntax
+        run: |
+          for f in $(find src packaging -name '*.sh'); do bash -n "$f"; done
+
+  powershell:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse PowerShell sources
+        shell: pwsh
+        run: |
+          Get-ChildItem -Recurse src -Filter *.ps1 | ForEach-Object {
+            [scriptblock]::Create((Get-Content $_.FullName -Raw)) | Out-Null
+            Write-Host "OK $($_.FullName)"
+          }

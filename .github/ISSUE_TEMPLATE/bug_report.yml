@@ -1,0 +1,32 @@
+name: Bug report
+description: Report a reproducible failure or compatibility problem
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Operating system
+      placeholder: Windows 11 / CentOS 7 / Ubuntu ...
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Abaqus version and launch command
+      placeholder: Abaqus 2024; abaqus / abq2024 / Singularity prefix
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Error log / traceback
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Reproduction details
+      description: Step/frame/field, instance/set, and whether the ODB is large or multi-step.
