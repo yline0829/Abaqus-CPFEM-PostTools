@@ -31,8 +31,8 @@
 
 | 程序 | 主要用途 |
 |---|---|
-| **Abaqus Data Exporter** | 选择性 ODB → VTU/PVD 导出、ParaView 场变量、GrainID、Initial IPF、Mises、GND 差值、晶粒极值分析以及 History/Curve 数据 |
-| **Abaqus CPFEM Postprocess** | RP 时历数据提取，以及基于物理时间匹配的 PEEQCP 逐帧重构、目标帧保存与写回 |
+| **ODB2VTU Exporter** | 面向大型 ODB 的选择性 ODB → VTU/PVD 导出、任意 Step/Frame 场变量比较、ParaView 场变量、GrainID、Initial IPF、Mises、GND 差值、晶粒极值分析以及 History/Curve 数据 |
+| **CPFEM Postprocessor** | RP 时历数据提取，以及基于物理时间匹配的 PEEQCP 逐帧重构、目标帧保存与写回 |
 
 ## 核心特色
 
