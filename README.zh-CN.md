@@ -1,4 +1,4 @@
-# Abaqus-CPFEM-PostTools
+# Abaqus-CPFEM Selective PostTools
 
 [English](README.md) | **简体中文**
 
@@ -7,7 +7,7 @@
 ![Windows](https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)
 
-面向 **Abaqus/CPFEM** 的跨平台后处理工具集，主要用于大型 ODB 选择性读取、ParaView 可视化、晶粒尺度场分析、GND 演化、摩擦时历数据提取以及 PEEQCP 重构。
+**面向大型 Abaqus ODB 的选择性后处理工具集。** 主要用于 ODB 选择性读取、ParaView 可视化、晶粒尺度场分析、GND 演化、摩擦时历数据提取以及 PEEQCP 重构。
 
 > 本项目与 Dassault Systèmes 无关联。读取和写入 ODB 需要用户本机已安装并获得合法许可的 Abaqus；本仓库不分发 Abaqus 库、可执行文件或其他商业软件组件。
 
