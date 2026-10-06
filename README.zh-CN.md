@@ -4,7 +4,7 @@
 
 [English](README.md) | **简体中文**
 
-[![Latest Release](https://img.shields.io/github/v/release/yline0829/Abaqus-CPFEM-PostTools?display_name=tag&sort=semver)](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/yline0829/ODB2VTU-S?display_name=tag&sort=semver)](https://github.com/yline0829/ODB2VTU-S/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Windows](https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)
@@ -17,7 +17,7 @@
 
 普通用户建议直接从 **GitHub Releases** 下载最新打包版本：
 
-**[下载最新版本](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)**
+**[下载最新版本](https://github.com/yline0829/ODB2VTU-S/releases/latest)**
 
 当前提供（现有 v0.1.0 Release 仍保留首次发布时的旧文件名；后续版本将统一采用 ODB2VTU-S 命名）：
 
