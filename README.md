@@ -4,7 +4,7 @@
 
 **English** | [简体中文](README.zh-CN.md)
 
-[![Latest Release](https://img.shields.io/github/v/release/yline0829/Abaqus-CPFEM-PostTools?display_name=tag&sort=semver)](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)
+[![Latest Release](https://img.shields.io/github/v/release/yline0829/ODB2VTU-S?display_name=tag&sort=semver)](https://github.com/yline0829/ODB2VTU-S/releases/latest)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 ![Windows](https://img.shields.io/badge/Windows-supported-0078D6?logo=windows&logoColor=white)
 ![Linux](https://img.shields.io/badge/Linux-supported-FCC624?logo=linux&logoColor=black)
@@ -17,7 +17,7 @@
 
 For most users, the recommended entry point is the **latest GitHub Release**:
 
-**[Download the latest release](https://github.com/yline0829/Abaqus-CPFEM-PostTools/releases/latest)**
+**[Download the latest release](https://github.com/yline0829/ODB2VTU-S/releases/latest)**
 
 Available packages currently include (the existing v0.1.0 assets retain their original file names; future releases will use the ODB2VTU-S naming):
 
