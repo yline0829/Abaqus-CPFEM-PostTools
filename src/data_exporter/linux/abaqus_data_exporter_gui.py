@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Linux GUI for Abaqus Data Exporter.
+"""Linux GUI for ODB2VTU-S Exporter.
 GUI runs with system Python 3 + Tkinter.
 ODB backends run with: <abaqus command> python backend.py ...
 Target: Abaqus 2024/Linux (Python 3 odbAccess).
@@ -39,7 +39,7 @@ COF = 'COF=|RF1|/|CF2|'
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('Abaqus Data Exporter — Linux')
+        self.title('ODB2VTU-S Exporter — Linux')
         self.geometry('1320x820')
         self.minsize(1080, 700)
         self.meta = None
@@ -116,7 +116,7 @@ class App(tk.Tk):
 
         out = ttk.LabelFrame(left, text='输出 / Output', padding=8); out.pack(fill='x', pady=(0,7))
         r = ttk.Frame(out); r.pack(fill='x')
-        ttk.Checkbutton(r, text='自动匹配 ODB/ADE_Output', variable=self.auto_out, command=self.refresh_output_path).pack(side='left')
+        ttk.Checkbutton(r, text='自动匹配 ODB/ODB2VTU_Output', variable=self.auto_out, command=self.refresh_output_path).pack(side='left')
         ttk.Button(r, text='选择输出文件夹', command=self.choose_output_dir).pack(side='left', padx=8)
         r2=ttk.Frame(out); r2.pack(fill='x', pady=(5,0))
         ttk.Entry(r2, textvariable=self.output_file).pack(side='left', fill='x', expand=True)
@@ -247,7 +247,7 @@ class App(tk.Tk):
         out=ttk.LabelFrame(right,text='输出 / Output',padding=8); out.pack(fill='x',pady=(0,7))
         self.curve_auto=tk.BooleanVar(value=True); self.curve_out=tk.StringVar()
         rr=ttk.Frame(out); rr.pack(fill='x')
-        ttk.Checkbutton(rr,text='自动输出到 ODB/ADE_Output',variable=self.curve_auto,command=self.curve_update_out).pack(side='left')
+        ttk.Checkbutton(rr,text='自动输出到 ODB/ODB2VTU_Output',variable=self.curve_auto,command=self.curve_update_out).pack(side='left')
         ttk.Button(rr,text='选择文件夹',command=self.curve_choose_folder).pack(side='left',padx=6)
         rr2=ttk.Frame(out); rr2.pack(fill='x',pady=5)
         ttk.Entry(rr2,textvariable=self.curve_out).pack(side='left',fill='x',expand=True)
@@ -388,7 +388,7 @@ class App(tk.Tk):
 
     def auto_dir(self):
         if not self.odb_var.get():return ''
-        d=Path(self.odb_var.get()).resolve().parent/'ADE_Output'; d.mkdir(exist_ok=True)
+        d=Path(self.odb_var.get()).resolve().parent/'ODB2VTU_Output'; d.mkdir(exist_ok=True)
         return str(d)
 
     def choose_output_dir(self):
@@ -513,7 +513,7 @@ class App(tk.Tk):
     def curve_dir(self):
         p=self.curve_odb.get() or self.odb_var.get();
         if not p:return ''
-        d=Path(p).parent/'ADE_Output';d.mkdir(exist_ok=True);return str(d)
+        d=Path(p).parent/'ODB2VTU_Output';d.mkdir(exist_ok=True);return str(d)
     def curve_update_out(self):
         p=self.curve_odb.get() or self.odb_var.get();
         if not p:return
@@ -580,7 +580,7 @@ class App(tk.Tk):
     # ---------------- Analysis logic ----------------
     def analysis_default_out(self):
         odb=self.odb_var.get();
-        if odb:self.a_out.set(str(Path(odb).parent/'ADE_Output'/'Field_Analysis'))
+        if odb:self.a_out.set(str(Path(odb).parent/'ODB2VTU_Output'/'Field_Analysis'))
     def analysis_frames(self):
         if not self.meta or not self.a_step.get():return
         vals=[str(i) for i in range(self.frame_count(self.a_step.get()))];self.a_frame['values']=vals

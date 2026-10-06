@@ -310,7 +310,7 @@ def main():
 
         summary_path=os.path.join(a.outdir,tag+"_summary.txt")
         with open(summary_path,"w") as f:
-            f.write("Abaqus Data Exporter - Field Extremum Analysis\n")
+            f.write("ODB2VTU-S Exporter - Field Extremum Analysis\n")
             f.write("ODB: %s\nStep: %s\nFrame: %d\nVariable: %s\n"%(a.odb,a.step,a.frame,a.field_token))
             f.write("Region BBox: %s\n"%(a.bbox if a.bbox else "All grain elements"))
             f.write("Global MAX: %.12g ; GrainID=%s ; Element=%s ; IP=%s\n"%(rmax["Value"],rmax["GrainID"],rmax["ElementLabel"],rmax["IntegrationPoint"]))

@@ -5,7 +5,7 @@ $scriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $masterPy = Join-Path $scriptDir "abaqus_postprocess_master.py"
 
 $form = New-Object System.Windows.Forms.Form
-$form.Text = "Abaqus 通用摩擦后处理"
+$form.Text = "ODB2VTU-S CPFEM Postprocessor"
 $form.Size = New-Object System.Drawing.Size(760, 450)
 $form.StartPosition = "CenterScreen"
 $form.FormBorderStyle = "FixedDialog"

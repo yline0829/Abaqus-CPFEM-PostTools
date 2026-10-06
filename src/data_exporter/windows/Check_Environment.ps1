@@ -1,6 +1,6 @@
 ﻿$ErrorActionPreference = "SilentlyContinue"
 
-Write-Host "Abaqus Data Exporter - Environment Check" -ForegroundColor Cyan
+Write-Host "ODB2VTU-S Exporter - Environment Check" -ForegroundColor Cyan
 Write-Host ""
 
 $abaqus = Get-Command abaqus -ErrorAction SilentlyContinue

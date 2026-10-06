@@ -22,7 +22,7 @@ $analysisFieldsJson = Join-Path $scriptDir "_analysis_fields.json"
 [xml]$xaml = @"
 <Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Abaqus Data Exporter"
+        Title="ODB2VTU-S Exporter"
         Width="1360" Height="850"
         MinWidth="1080" MinHeight="700"
         WindowStartupLocation="CenterScreen"
@@ -598,7 +598,7 @@ $script:selectedStates = New-Object System.Collections.ArrayList
 
 $T = @{
 en = @{
-Window="Abaqus Data Exporter"; File="_File"; Open="Open ODB..."; Exit="Exit"; Edit="_Edit"; View="_View"; Tools="_Tools"; Help="_Help";
+Window="ODB2VTU-S Exporter"; File="_File"; Open="Open ODB..."; Exit="Exit"; Edit="_Edit"; View="_View"; Tools="_Tools"; Help="_Help";
 OpenODB="Open ODB"; ReadMeta="Read Metadata"; ReadFields="Read Fields"; Export="Export Data"; OpenFolder="Open Output Folder"; Language="Language";
 Properties="Properties"; CurveData="Curve Data..."; FieldAnalysis="Field Extremum Analysis..."; Apply="Apply"; Reset="Reset";
 Source="Source"; ODBFile="ODB File"; Target="Target"; Instance="Instance"; ElementSet="Element Set"; Step="Step"; Frame="Frame";
@@ -613,7 +613,7 @@ Ready="Ready"; NoODB="ODB: not loaded"; Whole="<Whole Instance>"; AllGrains="<Al
 SeriesCount="Selected states"
 }
 zh = @{
-Window="Abaqus 数据导出器"; File="_文件"; Open="打开 ODB..."; Exit="退出"; Edit="_编辑"; View="_视图"; Tools="_工具"; Help="_帮助";
+Window="ODB2VTU-S 数据导出器"; File="_文件"; Open="打开 ODB..."; Exit="退出"; Edit="_编辑"; View="_视图"; Tools="_工具"; Help="_帮助";
 OpenODB="打开 ODB"; ReadMeta="读取元数据"; ReadFields="读取场变量"; Export="导出数据"; OpenFolder="打开输出文件夹"; Language="语言";
 Properties="属性"; CurveData="曲线数据..."; FieldAnalysis="场变量极值分析..."; Apply="应用"; Reset="重置";
 Source="数据源"; ODBFile="ODB 文件"; Target="目标状态"; Instance="实例"; ElementSet="单元集"; Step="分析步"; Frame="帧";
@@ -642,7 +642,7 @@ function Get-AutoOutputDirectory([string]$odbPath){
         $odbDir = Split-Path $odbPath -Parent
         if([string]::IsNullOrWhiteSpace($odbDir)){ return "" }
 
-        $outDir = Join-Path $odbDir "ADE_Output"
+        $outDir = Join-Path $odbDir "ODB2VTU_Output"
 
         if(-not (Test-Path $outDir)){
             New-Item -ItemType Directory -Path $outDir -Force | Out-Null
@@ -1052,7 +1052,7 @@ function UpdateSummary {
     }
 
     if($chkAutoOutput.IsChecked){
-        $s += "Output mode : Auto -> ADE_Output`r`n"
+        $s += "Output mode : Auto -> ODB2VTU_Output`r`n"
     } else {
         $s += "Output mode : Custom folder -> " + $script:customFieldOutputDir + "`r`n"
     }
@@ -2242,7 +2242,7 @@ function ShowCurveDataWindow {
         $s += "X scale/offset: " + $cTxtXScale.Text + " / " + $cTxtXOffset.Text + "`r`n"
         $s += "Y scale/offset: " + $cTxtYScale.Text + " / " + $cTxtYOffset.Text + "`r`n"
         if($cChkAutoOutput.IsChecked){
-            $s += "Output mode: Auto -> ADE_Output`r`n"
+            $s += "Output mode: Auto -> ODB2VTU_Output`r`n"
         } else {
             $s += "Output mode: Custom folder -> " + $script:customCurveOutputDir + "`r`n"
         }

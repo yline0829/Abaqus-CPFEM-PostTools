@@ -10,7 +10,7 @@ MASTER=HERE/'abaqus_postprocess_master.py'
 
 class PostGUI(tk.Tk):
     def __init__(self):
-        super().__init__(); self.title('Abaqus 通用摩擦/CPFEM 后处理 — Linux'); self.geometry('820x500'); self.minsize(720,440)
+        super().__init__(); self.title('ODB2VTU-S CPFEM Postprocessor — Linux'); self.geometry('820x500'); self.minsize(720,440)
         self.abaqus=tk.StringVar(value=os.environ.get('ABAQUS_CMD','abaqus')); self.odb=tk.StringVar(); self.out=tk.StringVar(); self.status=tk.StringVar(value='状态：等待选择')
         self.q=queue.Queue(); self.running=False; self.current_op=None
         self.build(); self.after(100,self.drain)
