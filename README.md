@@ -34,6 +34,44 @@ The toolkit currently contains two complementary applications:
 | **Abaqus Data Exporter** | Selective ODB → VTU/PVD export, ParaView-ready fields, GrainID, Initial IPF, Mises, GND differences, grain-level extrema, and History/Curve data |
 | **Abaqus CPFEM Postprocess** | RP history extraction and frame-by-frame PEEQCP reconstruction/write-back using a physically matched StepTime sampling schedule |
 
+## Key capabilities
+
+### Selective ODB → VTU/PVD instead of full-database conversion
+
+The Data Exporter is designed for large Abaqus ODB files. Users can select the **instance, grain/element region, Step, Frame, and Field Output** that are actually needed, then export only those states to ParaView-compatible VTU/PVD files. This avoids converting an entire multi-GB or multi-hundred-GB ODB when only a small set of physical states is required.
+
+### Arbitrary Step/Frame time-series construction
+
+A ParaView time series can be assembled from **arbitrary Step/Frame combinations**, not only consecutive frames. Multiple Steps can be selected together and specific frames can be added to the export schedule, which is useful for comparing equivalent physical positions across repeated friction cycles.
+
+### Generic SDV / scalar-field difference comparison
+
+For scalar element fields, including user-defined **SDV variables**, the exporter can calculate a target-reference difference between arbitrary stored states:
+
+```text
+DELTA_Field = Field(target Step/Frame) - Field(reference Step/Frame)
+```
+
+The reference Step and reference Frame are user-selectable. This makes it possible to compare, for example, `SDV29`, `SDV66`, `SDV104`, or another scalar element variable between selected loading/friction states and visualize the resulting difference directly in ParaView.
+
+### Grain-aware post-processing
+
+The toolkit reconstructs `GrainID`, supports an `<All Grains>` virtual region, correlates field extrema with grains, ranks Top-N grains, and can export only the selected extreme grains so unrelated grains are completely absent from the ParaView geometry.
+
+### CPFEM-derived fields beyond native Abaqus output
+
+Current model-specific derived capabilities include **Mises stress**, **Initial HCP-Ti IPF**, **18-slip-system GND evolution**, sliding-reference GND increments, and reconstructed **PEEQCP** from `Fp = SDV1–SDV9`.
+
+### Physically matched sampling for cyclic friction
+
+For PEEQCP comparison, the postprocessor traverses all stored frames for accumulation while saving:
+- indentation/normal loading: first + last frame
+- each sliding cycle: **T0 / T25 / T50 / T75 / T100 by StepTime**
+
+If a target time is not stored exactly, the nearest actual ODB frame is selected.
+
+> Note: the current generic field-comparison feature is a **stored-frame difference**, not continuous temporal interpolation between two frames. True time interpolation of arbitrary fields can be added as a future feature.
+
 ## Screenshots
 
 ### 1. Abaqus Data Exporter
