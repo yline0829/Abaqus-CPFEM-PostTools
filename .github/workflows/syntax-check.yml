@@ -16,13 +16,21 @@ jobs:
         run: |
           python - <<'PY'
           import pathlib
-          for p in pathlib.Path('src').rglob('*.py'):
-              compile(p.read_text(encoding='utf-8'), str(p), 'exec')
-              print('OK', p)
+          root = pathlib.Path('src')
+          if root.exists():
+              for p in root.rglob('*.py'):
+                  compile(p.read_text(encoding='utf-8'), str(p), 'exec')
+                  print('OK', p)
+          else:
+              print('src/ not uploaded yet; documentation-only commit')
           PY
       - name: Check shell syntax
         run: |
-          for f in $(find src packaging -name '*.sh'); do bash -n "$f"; done
+          if [ -d src ] || [ -d packaging ]; then
+            find src packaging -name '*.sh' -type f 2>/dev/null | while read -r f; do bash -n "$f"; done
+          else
+            echo "No shell source directories yet"
+          fi
 
   powershell:
     runs-on: windows-latest
@@ -31,7 +39,11 @@ jobs:
       - name: Parse PowerShell sources
         shell: pwsh
         run: |
-          Get-ChildItem -Recurse src -Filter *.ps1 | ForEach-Object {
-            [scriptblock]::Create((Get-Content $_.FullName -Raw)) | Out-Null
-            Write-Host "OK $($_.FullName)"
+          if (Test-Path src) {
+            Get-ChildItem -Recurse src -Filter *.ps1 | ForEach-Object {
+              [scriptblock]::Create((Get-Content $_.FullName -Raw)) | Out-Null
+              Write-Host "OK $($_.FullName)"
+            }
+          } else {
+            Write-Host "src/ not uploaded yet; documentation-only commit"
           }
