@@ -1,6 +1,6 @@
-# Linux installation
+# ODB2VTU-S — Linux installation
 
-The Linux GUIs use system Python 3 + Tkinter. ODB operations run through Abaqus Python.
+The ODB2VTU-S Linux GUIs use system Python 3 + Tkinter. ODB operations run through Abaqus Python.
 
 ## Dependencies
 

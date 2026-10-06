@@ -9,7 +9,7 @@ Please include:
 - operating system
 - Abaqus version
 - launch command style (`abaqus`, `abq2024`, Singularity/Apptainer, etc.)
-- whether the problem is in Data Exporter or CPFEM Postprocess
+- whether the problem is in ODB2VTU-S Exporter or ODB2VTU-S CPFEM Postprocessor
 - Step/Frame and field involved
 - the complete error traceback or log
 

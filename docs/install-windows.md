@@ -1,6 +1,6 @@
-# Windows installation
+# ODB2VTU-S — Windows installation
 
-## Data Exporter
+## ODB2VTU-S Exporter
 
 Use the Windows portable release and launch:
 
@@ -10,7 +10,7 @@ Launch_Abaqus_Data_Exporter.vbs
 
 Abaqus must be callable from Command Prompt, normally as `abaqus`.
 
-## CPFEM Postprocess
+## ODB2VTU-S CPFEM Postprocessor
 
 Launch:
 

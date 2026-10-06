@@ -1,7 +1,7 @@
 {
-  "name": "Abaqus Data Exporter",
-  "display_name_zh": "Abaqus 数据导出器",
-  "description": "Selective Abaqus ODB field/history exporter for ParaView and curve data.",
+  "name": "ODB2VTU-S Exporter",
+  "display_name_zh": "ODB2VTU-S 数据导出器",
+  "description": "Selective large-Abaqus-ODB field/history exporter for ParaView, arbitrary stored-frame comparison, and CPFEM-oriented analysis.",
   "requires": [
     "Windows",
     "Abaqus with odbAccess",
@@ -9,7 +9,7 @@
   ],
   "launch": "Launch_Abaqus_Data_Exporter.vbs",
   "auto_output": {
-    "folder_name": "ADE_Output",
+    "folder_name": "ODB2VTU_Output",
     "behavior": "Automatically created next to the selected ODB."
   },
   "features_added": [

@@ -1,6 +1,6 @@
-# Data Exporter notes
+# ODB2VTU-S Exporter notes
 
-The exporter opens ODBs read-only and is designed to avoid full-database conversion for large simulations.
+ODB2VTU-S Exporter opens ODBs read-only and is designed specifically for large simulations. It selectively reads only the requested instance/region, Step, Frame, and Field Output instead of converting the complete database.
 
 ## VTU/PVD
 
