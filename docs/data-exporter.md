@@ -12,9 +12,9 @@ The exporter opens ODBs read-only and is designed to avoid full-database convers
 
 ## Derived fields
 
-- \`Mises\`: computed from stress components
+- `Mises`: computed from stress components
 - Initial IPF: HCP-Ti initial orientation from per-grain material Euler angles in the INP
-- GND increment fields: see \`gnd_mapping.md\`
+- GND increment fields: see `gnd_mapping.md`
 
 ## Field analysis
 

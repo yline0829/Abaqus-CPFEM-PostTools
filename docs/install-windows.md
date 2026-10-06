@@ -4,21 +4,21 @@
 
 Use the Windows portable release and launch:
 
-~~~text
+```text
 Launch_Abaqus_Data_Exporter.vbs
-~~~
+```
 
-Abaqus must be callable from Command Prompt, normally as \`abaqus\`.
+Abaqus must be callable from Command Prompt, normally as `abaqus`.
 
 ## CPFEM Postprocess
 
 Launch:
 
-~~~text
+```text
 Launch_Abaqus_Postprocess_GUI.bat
-~~~
+```
 
-The GUI calls \`abaqus python abaqus_postprocess_master.py ...\`.
+The GUI calls `abaqus python abaqus_postprocess_master.py ...`.
 
 ## Notes
 

@@ -1,0 +1,20 @@
+{
+  "name": "Abaqus Data Exporter",
+  "display_name_zh": "Abaqus 数据导出器",
+  "description": "Selective Abaqus ODB field/history exporter for ParaView and curve data.",
+  "requires": [
+    "Windows",
+    "Abaqus with odbAccess",
+    "Abaqus command accessible as 'abaqus'"
+  ],
+  "launch": "Launch_Abaqus_Data_Exporter.vbs",
+  "auto_output": {
+    "folder_name": "ADE_Output",
+    "behavior": "Automatically created next to the selected ODB."
+  },
+  "features_added": [
+    "Mises Stress derived field",
+    "Initial IPF from grain materials in INP",
+    "Field Extremum and Grain Correlation Analysis"
+  ]
+}
