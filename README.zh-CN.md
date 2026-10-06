@@ -34,6 +34,44 @@
 | **Abaqus Data Exporter** | 选择性 ODB → VTU/PVD 导出、ParaView 场变量、GrainID、Initial IPF、Mises、GND 差值、晶粒极值分析以及 History/Curve 数据 |
 | **Abaqus CPFEM Postprocess** | RP 时历数据提取，以及基于物理时间匹配的 PEEQCP 逐帧重构、目标帧保存与写回 |
 
+## 核心特色
+
+### 选择性 ODB → VTU/PVD，而不是整库转换
+
+Data Exporter 面向大型 Abaqus ODB。用户可以只选择真正需要的 **Instance、晶粒/单元区域、Step、Frame 和 Field Output**，然后仅把这些状态导出成 ParaView 可直接读取的 VTU/PVD。对于几十 GB、上百 GB 的 ODB，不需要为了看少量关键状态而把整个数据库全部转换。
+
+### 任意 Step/Frame 组合成 ParaView 时间序列
+
+时间序列不是固定模板，也不要求连续帧。用户可以自由选择多个 Step，并把任意 Frame 加入导出序列，因此可以直接比较多个摩擦循环中具有相同物理位置或相同阶段意义的状态。
+
+### 任意 SDV / 标量场的跨 Step/Frame 差值比较
+
+对于单元标量场，包括用户自定义的 **SDV 变量**，程序可以在任意两个已存储状态之间计算：
+
+```text
+DELTA_Field = Field(目标 Step/Frame) - Field(参考 Step/Frame)
+```
+
+参考 Step 和参考 Frame 都可以自由选择。因此可以直接比较例如 `SDV29`、`SDV66`、`SDV104` 或其他标量单元变量在下压、不同摩擦循环或不同时间状态之间的变化，并把差值场直接导入 ParaView 做云图分析。
+
+### 晶粒尺度关联分析
+
+程序可重构 `GrainID`，提供 `<所有晶粒>` 虚拟区域，并把场变量极值与具体晶粒关联起来；支持 Top-N 晶粒和极值区间晶粒筛选，还可以只导出这些目标晶粒，使 ParaView 中完全不显示无关晶粒。
+
+### 在 Abaqus 原生输出基础上生成 CPFEM 派生场
+
+当前已支持的模型相关派生结果包括：**Mises 应力、Initial HCP-Ti IPF、18 个滑移系 GND 演化、滑动起点 GND 增量，以及基于 `Fp = SDV1–SDV9` 重构的 PEEQCP**。
+
+### 面向循环摩擦的物理时刻匹配
+
+PEEQCP 仍遍历全部存储帧进行累积，但只保存具有明确物理意义的状态：
+- 下压/法向加载：首帧 + 末帧
+- 每个摩擦循环：按 StepTime 取 **T0 / T25 / T50 / T75 / T100**
+
+如果目标 StepTime 没有恰好对应的 ODB 输出帧，程序自动选择时间最接近的真实 Frame。
+
+> 说明：当前通用场变量比较实现的是**已存储帧之间的差值**，不是两个 Frame 之间的连续时间插值。如果后续需要对任意场变量按目标 StepTime 做真正的线性时间插值，可以作为下一阶段功能加入。
+
 ## 软件截图
 
 ### 1. Abaqus Data Exporter 数据导出器
