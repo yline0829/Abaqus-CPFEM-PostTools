@@ -31,8 +31,8 @@ The toolkit currently contains two complementary applications:
 
 | Application | Main purpose |
 |---|---|
-| **Abaqus Data Exporter** | Selective ODB → VTU/PVD export, ParaView-ready fields, GrainID, Initial IPF, Mises, GND differences, grain-level extrema, and History/Curve data |
-| **Abaqus CPFEM Postprocess** | RP history extraction and frame-by-frame PEEQCP reconstruction/write-back using a physically matched StepTime sampling schedule |
+| **ODB2VTU Exporter** | Large-ODB selective ODB → VTU/PVD export, arbitrary Step/Frame field comparison, ParaView-ready fields, GrainID, Initial IPF, Mises, GND differences, grain-level extrema, and History/Curve data |
+| **CPFEM Postprocessor** | RP history extraction and frame-by-frame PEEQCP reconstruction/write-back using a physically matched StepTime sampling schedule |
 
 ## Key capabilities
 
