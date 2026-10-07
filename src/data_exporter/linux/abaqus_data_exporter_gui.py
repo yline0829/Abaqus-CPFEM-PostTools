@@ -114,16 +114,40 @@ class App(tk.Tk):
         canvas.bind('<Configure>', _sync_width)
 
         # Linux/X11 mouse wheel support while the pointer is over this pane.
+        # Do not hijack wheel events from interactive/scrollable child widgets:
+        # Listbox/Text should scroll themselves; Combobox/Entry should not move the page.
+        blocked_wheel_classes = {
+            'Listbox', 'Text', 'Entry', 'TEntry', 'Combobox', 'TCombobox',
+            'Spinbox', 'TSpinbox', 'Treeview', 'Scale', 'TScale',
+            'Scrollbar', 'TScrollbar'
+        }
+
+        def _page_wheel_allowed(event):
+            try:
+                return event.widget.winfo_class() not in blocked_wheel_classes
+            except Exception:
+                return True
+
         def _wheel_up(event):
+            if not _page_wheel_allowed(event):
+                return None
             canvas.yview_scroll(-3, 'units')
+            return 'break'
+
         def _wheel_down(event):
+            if not _page_wheel_allowed(event):
+                return None
             canvas.yview_scroll(3, 'units')
+            return 'break'
+
         def _bind_wheel(event):
             canvas.bind_all('<Button-4>', _wheel_up)
             canvas.bind_all('<Button-5>', _wheel_down)
+
         def _unbind_wheel(event):
             canvas.unbind_all('<Button-4>')
             canvas.unbind_all('<Button-5>')
+
         canvas.bind('<Enter>', _bind_wheel)
         canvas.bind('<Leave>', _unbind_wheel)
         inner.bind('<Enter>', _bind_wheel)
