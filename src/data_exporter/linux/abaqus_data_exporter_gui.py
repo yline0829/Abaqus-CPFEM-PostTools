@@ -90,6 +90,47 @@ class App(tk.Tk):
         s.configure('TButton', padding=(7,4))
         s.configure('TNotebook.Tab', padding=(12,6))
 
+    def _make_scrollable_pane(self, parent, padding=8):
+        """Create a vertically scrollable pane compatible with CentOS 7 / Tk 8.5."""
+        host = ttk.Frame(parent)
+        canvas = tk.Canvas(host, highlightthickness=0, borderwidth=0)
+        scroll = ttk.Scrollbar(host, orient='vertical', command=canvas.yview)
+        canvas.configure(yscrollcommand=scroll.set)
+        scroll.pack(side='right', fill='y')
+        canvas.pack(side='left', fill='both', expand=True)
+
+        inner = ttk.Frame(canvas, padding=padding)
+        window_id = canvas.create_window((0, 0), window=inner, anchor='nw')
+
+        def _sync_region(event=None):
+            box = canvas.bbox('all')
+            if box:
+                canvas.configure(scrollregion=box)
+
+        def _sync_width(event):
+            canvas.itemconfigure(window_id, width=event.width)
+
+        inner.bind('<Configure>', _sync_region)
+        canvas.bind('<Configure>', _sync_width)
+
+        # Linux/X11 mouse wheel support while the pointer is over this pane.
+        def _wheel_up(event):
+            canvas.yview_scroll(-3, 'units')
+        def _wheel_down(event):
+            canvas.yview_scroll(3, 'units')
+        def _bind_wheel(event):
+            canvas.bind_all('<Button-4>', _wheel_up)
+            canvas.bind_all('<Button-5>', _wheel_down)
+        def _unbind_wheel(event):
+            canvas.unbind_all('<Button-4>')
+            canvas.unbind_all('<Button-5>')
+        canvas.bind('<Enter>', _bind_wheel)
+        canvas.bind('<Leave>', _unbind_wheel)
+        inner.bind('<Enter>', _bind_wheel)
+        inner.bind('<Leave>', _unbind_wheel)
+
+        return host, inner
+
     def _build_topbar(self):
         f = ttk.Frame(self, padding=(8,6))
         f.pack(fill='x')
@@ -101,8 +142,9 @@ class App(tk.Tk):
     def _build_export_tab(self):
         root = self.export_tab
         pan = ttk.Panedwindow(root, orient='horizontal'); pan.pack(fill='both', expand=True)
-        left = ttk.Frame(pan, padding=8); right = ttk.Frame(pan, padding=8)
-        pan.add(left, weight=3); pan.add(right, weight=5)
+        left_host, left = self._make_scrollable_pane(pan, padding=8)
+        right_host, right = self._make_scrollable_pane(pan, padding=8)
+        pan.add(left_host, weight=3); pan.add(right_host, weight=5)
 
         src = ttk.LabelFrame(left, text='数据源 / Source', padding=8); src.pack(fill='x', pady=(0,7))
         row = ttk.Frame(src); row.pack(fill='x')
@@ -230,8 +272,9 @@ class App(tk.Tk):
     def _build_curve_tab(self):
         root=self.curve_tab
         outer=ttk.Panedwindow(root,orient='horizontal'); outer.pack(fill='both',expand=True,padx=8,pady=8)
-        left=ttk.Frame(outer,padding=4); right=ttk.Frame(outer,padding=4)
-        outer.add(left,weight=3); outer.add(right,weight=4)
+        left_host,left=self._make_scrollable_pane(outer,padding=4)
+        right_host,right=self._make_scrollable_pane(outer,padding=4)
+        outer.add(left_host,weight=3); outer.add(right_host,weight=4)
         src=ttk.LabelFrame(left,text='History Source',padding=8); src.pack(fill='x',pady=(0,7))
         self.curve_odb=tk.StringVar()
         r=ttk.Frame(src); r.pack(fill='x')
@@ -280,7 +323,9 @@ class App(tk.Tk):
     def _build_analysis_tab(self):
         root=self.analysis_tab
         pan=ttk.Panedwindow(root,orient='horizontal'); pan.pack(fill='both',expand=True,padx=8,pady=8)
-        left=ttk.Frame(pan,padding=4); right=ttk.Frame(pan,padding=4); pan.add(left,weight=3); pan.add(right,weight=5)
+        left_host,left=self._make_scrollable_pane(pan,padding=4)
+        right_host,right=self._make_scrollable_pane(pan,padding=4)
+        pan.add(left_host,weight=3); pan.add(right_host,weight=5)
         data=ttk.LabelFrame(left,text='Data State',padding=8); data.pack(fill='x',pady=(0,7))
         self.a_instance=ttk.Combobox(data,state='readonly'); self.a_instance.pack(fill='x',pady=2)
         self.a_step=ttk.Combobox(data,state='readonly'); self.a_step.pack(fill='x',pady=2); self.a_step.bind('<<ComboboxSelected>>',lambda e:self.analysis_frames())
