@@ -149,12 +149,13 @@ class App(tk.Tk):
         ttk.Button(buttons,text='清空',command=self.clear_states).pack(side='left',padx=5)
 
         # right fields / derived / log
-        fields = ttk.LabelFrame(right,text='Field Output',padding=8); fields.pack(fill='both',expand=True,pady=(0,7))
+        fields = ttk.LabelFrame(right,text='Field Output',padding=8); fields.pack(fill='x',expand=False,pady=(0,7))
         tb=ttk.Frame(fields); tb.pack(fill='x')
         ttk.Button(tb,text='读取当前帧变量',command=self.read_fields).pack(side='left')
         ttk.Button(tb,text='全选',command=lambda:self.fields_lb.select_set(0,'end')).pack(side='left',padx=5)
         ttk.Button(tb,text='清空',command=lambda:self.fields_lb.selection_clear(0,'end')).pack(side='left')
-        self.fields_lb=tk.Listbox(fields,selectmode='extended',exportselection=False,height=15); self.fields_lb.pack(fill='both',expand=True,pady=(6,0))
+        self.fields_lb=tk.Listbox(fields,selectmode='extended',exportselection=False,height=9); self.fields_lb.pack(fill='both',expand=True,pady=(6,0))
+        self.fields_lb.bind('<<ListboxSelect>>', lambda e:self.update_export_summary())
 
         drv=ttk.LabelFrame(right,text='派生场 / Derived Fields',padding=8); drv.pack(fill='x',pady=(0,7))
         rr=ttk.Frame(drv); rr.pack(fill='x')
@@ -198,12 +199,32 @@ class App(tk.Tk):
         self.ref_step_cb.bind('<<ComboboxSelected>>',lambda e:self.populate_ref_frames())
         self.ref_frame_cb=ttk.Combobox(d,state='readonly',width=10); self.ref_frame_cb.pack(side='left')
 
+        summary_box=ttk.LabelFrame(right,text='选择摘要 / Selection Summary',padding=6); summary_box.pack(fill='both',expand=True,pady=(0,7))
+        self.summary=tk.Text(summary_box,height=8,wrap='none',state='disabled')
+        self.summary.pack(fill='both',expand=True)
+
         actions=ttk.Frame(right); actions.pack(fill='x',pady=(0,7))
         ttk.Button(actions,text='导出 VTU / PVD',command=self.run_export).pack(side='left')
         ttk.Button(actions,text='打开输出目录',command=lambda:self.open_folder(Path(self.output_file.get()).parent)).pack(side='left',padx=5)
         self.status_var=tk.StringVar(value='Ready')
         ttk.Label(actions,textvariable=self.status_var).pack(side='left',padx=12)
-        self.log=tk.Text(right,height=9,wrap='none'); self.log.pack(fill='both',expand=False)
+
+        msg_box=ttk.LabelFrame(right,text='输出信息 / Output Messages',padding=6); msg_box.pack(fill='both',expand=True)
+        msg_head=ttk.Frame(msg_box); msg_head.pack(fill='x')
+        ttk.Button(msg_head,text='清空 / Clear',command=lambda:self.log.delete('1.0','end')).pack(side='right')
+        self.log=tk.Text(msg_box,height=8,wrap='none')
+        self.log.pack(fill='both',expand=True,pady=(4,0))
+
+        self.instance_cb.bind('<<ComboboxSelected>>', lambda e:(self.refresh_sets(),self.update_export_summary()))
+        self.set_cb.bind('<<ComboboxSelected>>', lambda e:self.update_export_summary())
+        self.step_cb.bind('<<ComboboxSelected>>', lambda e:(self.populate_frames(),self.update_export_summary()))
+        self.frame_cb.bind('<<ComboboxSelected>>', lambda e:self.update_export_summary())
+        for _v in (self.series_var,self.mises_var,self.ipf_var,self.ipf_dir,self.bbox_var,
+                   self.delta_var,self.delta_field,self.gnd_diff_var,self.gnd_mode_var,
+                   self.gnd_slide_diff_var,self.gnd_slide_ref_var,self.output_file):
+            try: _v.trace_add('write', lambda *_: self.update_export_summary())
+            except Exception: pass
+        self.after_idle(self.update_export_summary)
 
     # ---------------- Curve tab ----------------
     def _build_curve_tab(self):
@@ -307,7 +328,9 @@ class App(tk.Tk):
         def worker():
             rc=-1
             try:
-                p=subprocess.Popen(full,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,universal_newlines=True,bufsize=1)
+                env=os.environ.copy()
+                env['PYTHONUNBUFFERED']='1'
+                p=subprocess.Popen(full,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,universal_newlines=True,bufsize=1,env=env)
                 for line in p.stdout:
                     self.proc_queue.put(('log',log_widget,line))
                 rc=p.wait()
@@ -325,8 +348,9 @@ class App(tk.Tk):
                     if w:
                         w.insert('end',line); w.see('end')
                 elif item[0]=='done':
-                    self.running=False; self.status_var.set('Ready')
+                    self.running=False
                     cb,rc=item[1],item[2]
+                    self.status_var.set('Completed' if rc==0 else 'Failed (rc=%s)'%rc)
                     if cb:
                         try: cb(rc)
                         except Exception as exc: messagebox.showerror('Error',str(exc))
@@ -405,7 +429,10 @@ class App(tk.Tk):
         Path(d).mkdir(parents=True,exist_ok=True)
         stem=Path(odb).stem
         self.output_file.set(str(Path(d)/(stem+('_series.pvd' if self.series_var.get() else '_selected.vtu'))))
-    def _series_toggle(self): self.refresh_output_path()
+        self.update_export_summary()
+    def _series_toggle(self):
+        self.refresh_output_path()
+        self.update_export_summary()
 
     def read_metadata(self):
         odb=self.odb_var.get()
@@ -422,7 +449,7 @@ class App(tk.Tk):
             if steps:
                 self.step_cb.current(0); self.ref_step_cb.current(0); self.a_step.current(0); self.series_steps.selection_set(0)
                 self.populate_frames(); self.populate_ref_frames(); self.analysis_frames(); self.populate_common_frames()
-            self.analysis_default_out(); self.log.insert('end','Metadata ready.\n')
+            self.analysis_default_out(); self.log.insert('end','Metadata ready.\n'); self.update_export_summary()
         self.run_backend([META_PY,'--odb',odb,'--json',META_JSON],self.log,done,'Reading metadata')
 
     def refresh_sets(self):
@@ -457,6 +484,45 @@ class App(tk.Tk):
     def refresh_states_list(self):
         self.states_list.delete(0,'end')
         for s,f in self.selected_states:self.states_list.insert('end','%s | %d'%(s,f))
+        self.update_export_summary()
+
+    def update_export_summary(self):
+        if not hasattr(self,'summary'): return
+        lines=[]
+        odb=self.odb_var.get().strip()
+        lines.append('ODB      : %s' % (odb or '<not selected>'))
+        lines.append('Instance : %s' % (self.instance_cb.get() or '<not selected>'))
+        lines.append('Region   : %s' % (self.set_cb.get() or WHOLE))
+        if self.series_var.get():
+            lines.append('Mode     : PVD time series')
+            lines.append('States   : %d selected' % len(self.selected_states))
+            for s,f in self.selected_states:
+                lines.append('  %s / Frame %d' % (s,f))
+        else:
+            lines.append('Mode     : Single VTU')
+            lines.append('State    : %s / Frame %s' % (self.step_cb.get() or '<none>', self.frame_cb.get() or '<none>'))
+        try:
+            fs=self.selected_fields()
+        except Exception:
+            fs=[]
+        lines.append('Fields   : %s' % (', '.join(fs) if fs else '<none>'))
+        derived=[]
+        if self.mises_var.get(): derived.append('Mises')
+        if self.ipf_var.get(): derived.append('Initial IPF (%s)' % self.ipf_dir.get())
+        if self.gnd_diff_var.get(): derived.append('GND DAT difference (18 slips)')
+        if self.gnd_slide_diff_var.get(): derived.append('GND sliding-reference difference (18 slips)')
+        if self.delta_var.get():
+            derived.append('Difference %s ; ref=%s / Frame %s' % (
+                self.delta_field.get() or '<field>',
+                self.ref_step_cb.get() or '<step>',
+                self.ref_frame_cb.get() or '<frame>'))
+        lines.append('Derived  : %s' % (', '.join(derived) if derived else '<none>'))
+        if self.bbox_var.get().strip(): lines.append('BBox     : %s' % self.bbox_var.get().strip())
+        lines.append('Output   : %s' % (self.output_file.get().strip() or '<not set>'))
+        self.summary.configure(state='normal')
+        self.summary.delete('1.0','end')
+        self.summary.insert('end','\n'.join(lines))
+        self.summary.configure(state='disabled')
     def remove_states(self):
         inds=list(self.states_list.curselection())
         for i in reversed(inds): self.selected_states.pop(i)
@@ -475,6 +541,7 @@ class App(tk.Tk):
                 if f['name'] in ('SDV29','SDV78'):self.fields_lb.selection_set('end')
             self.delta_field_cb['values']=delta
             if delta:self.delta_field_cb.current(0)
+            self.update_export_summary()
         self.run_backend(args,self.log,done,'Reading fields')
 
     def selected_fields(self): return [self.fields_lb.get(i) for i in self.fields_lb.curselection()]
@@ -504,7 +571,24 @@ class App(tk.Tk):
         else:
             if not self.step_cb.get() or not self.frame_cb.get():return
             args=[EXPORT_PY]+common+['--step',self.step_cb.get(),'--frame',self.frame_cb.get(),'--out',self.output_file.get()]
-        self.run_backend(args,self.log,None,'Exporting')
+        self.update_export_summary()
+        def done(rc):
+            if rc==0:
+                self.log.insert('end','\n[GUI] EXPORT COMPLETE\n')
+                self.log.insert('end','Output: %s\n' % self.output_file.get())
+                self.log.see('end')
+                messagebox.showinfo(
+                    '导出完成 / Export Complete',
+                    'ODB2VTU-S 导出完成。\n\n输出文件：\n%s' % self.output_file.get()
+                )
+            else:
+                self.log.insert('end','\n[GUI] EXPORT FAILED (return code %s)\n' % rc)
+                self.log.see('end')
+                messagebox.showerror(
+                    '导出失败 / Export Failed',
+                    'ODB2VTU-S 导出未正常完成。\n返回码：%s\n\n请查看“输出信息 / Output Messages”。' % rc
+                )
+        self.run_backend(args,self.log,done,'Exporting')
 
     # ---------------- Curve logic ----------------
     def curve_browse_odb(self):
@@ -575,7 +659,12 @@ class App(tk.Tk):
         try: xs=float(self.x_scale.get());ys=float(self.y_scale.get());xo=float(self.x_off.get());yo=float(self.y_off.get())
         except ValueError:messagebox.showerror('Curve','Scale/offset必须为数字');return
         args=[CURVE_EXPORT_PY,'--odb',self.curve_odb.get(),'--steps-file',CURVE_STEPS_FILE,'--region',r,'--xsource',x,'--ysource',y,'--out',self.curve_out.get(),'--x-abs',int(self.x_abs.get()),'--y-abs',int(self.y_abs.get()),'--x-scale',xs,'--y-scale',ys,'--x-offset',xo,'--y-offset',yo,'--dedupe-boundary',int(self.dedupe.get())]
-        self.run_backend(args,self.curve_log,None,'Curve export')
+        def done(rc):
+            if rc==0:
+                messagebox.showinfo('Curve export complete','CSV 导出完成。\n\n%s' % self.curve_out.get())
+            else:
+                messagebox.showerror('Curve export failed','CSV 导出失败，返回码：%s\n请查看日志。' % rc)
+        self.run_backend(args,self.curve_log,done,'Curve export')
 
     # ---------------- Analysis logic ----------------
     def analysis_default_out(self):
@@ -609,7 +698,12 @@ class App(tk.Tk):
         Path(self.a_out.get()).mkdir(parents=True,exist_ok=True)
         args=[ANALYSIS_PY,'--odb',self.odb_var.get(),'--instance',self.a_instance.get(),'--step',self.a_step.get(),'--frame',self.a_frame.get(),'--field-token',self.a_field.get(),'--top-n',self.a_top.get(),'--rank-stat',self.a_rank.get(),'--direction',self.a_dir.get(),'--band-percent',self.a_band.get(),'--outdir',self.a_out.get(),'--export-vtu',int(self.a_export_vtu.get()),'--vtu-scope',self.a_scope.get(),'--split-grains',int(self.a_split.get())]
         if self.a_bbox.get().strip():args += ['--bbox',self.a_bbox.get().strip()]
-        self.run_backend(args,self.analysis_log,None,'Field analysis')
+        def done(rc):
+            if rc==0:
+                messagebox.showinfo('Field analysis complete','场变量分析完成。\n\n输出目录：\n%s' % self.a_out.get())
+            else:
+                messagebox.showerror('Field analysis failed','场变量分析失败，返回码：%s\n请查看日志。' % rc)
+        self.run_backend(args,self.analysis_log,done,'Field analysis')
 
     def open_folder(self,p):
         try:
