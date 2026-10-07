@@ -19,7 +19,7 @@ For most users, the recommended entry point is the **latest GitHub Release**:
 
 **[Download the latest release](https://github.com/yline0829/ODB2VTU-S/releases/latest)**
 
-Available packages currently include (the existing v0.1.0 assets retain their original file names; future releases will use the ODB2VTU-S naming):
+Current release packages use the **ODB2VTU-S** naming scheme:
 
 - **Windows — ODB2VTU-S Exporter**
 - **Windows — ODB2VTU-S CPFEM Postprocessor**
@@ -200,7 +200,7 @@ Generated ZIP files are written to `dist/` and are intentionally ignored by Git.
 
 ## Development status
 
-This is the first public source release (`v0.1.0`). The project grew from an internal research post-processing workflow and is being generalized incrementally. Please report model/version compatibility issues through GitHub Issues.
+The current release is **v0.1.1**, focused on ODB2VTU-S branding consistency and Linux GUI feedback improvements. The project grew from an internal research post-processing workflow and is being generalized incrementally. Please report model/version compatibility issues through GitHub Issues.
 
 ## License
 
