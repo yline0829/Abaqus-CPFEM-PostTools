@@ -22,6 +22,9 @@ All notable changes will be documented in this file.
 - Windows launchers, Linux desktop entries, installer paths, and release asset names aligned with the ODB2VTU-S naming scheme.
 - Repository links updated after the repository was renamed to `yline0829/ODB2VTU-S`.
 
+### Fixed
+- Mouse-wheel page scrolling no longer hijacks Listbox/Text/Combobox/Entry controls in the Linux GUI; interactive selection widgets now retain their own wheel behavior.
+
 ### Added
 - Linux Exporter now includes a dedicated **Selection Summary** panel showing ODB, instance/region, selected Step/Frame states, fields, derived fields, and output path.
 - Linux Exporter now includes a dedicated **Output Messages** panel with clear-log control.
