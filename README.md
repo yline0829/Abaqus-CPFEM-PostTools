@@ -200,7 +200,7 @@ Generated ZIP files are written to `dist/` and are intentionally ignored by Git.
 
 ## Development status
 
-The current release is **v0.1.1**, focused on ODB2VTU-S branding consistency and Linux GUI feedback improvements. The project grew from an internal research post-processing workflow and is being generalized incrementally. Please report model/version compatibility issues through GitHub Issues.
+The current release is **v0.1.2**, adding dedicated application icons and improved Linux usability on smaller displays. The project grew from an internal research post-processing workflow and is being generalized incrementally. Please report model/version compatibility issues through GitHub Issues.
 
 ## License
 

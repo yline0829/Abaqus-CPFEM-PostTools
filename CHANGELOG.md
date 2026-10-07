@@ -2,6 +2,17 @@
 
 All notable changes will be documented in this file.
 
+## [0.1.2] - 2026-10-07
+
+### Added
+- Dedicated application icons for **ODB2VTU-S Exporter** and **ODB2VTU-S CPFEM Postprocessor**.
+- Linux Exporter vertical scrolling and mouse-wheel support for smaller displays.
+
+### Changed
+- Linux installer now installs and assigns separate desktop icons to the two applications.
+- Release builder now includes application icon assets in Windows and Linux packages.
+
+
 ## [0.1.1] - 2026-10-07
 
 ### Changed
