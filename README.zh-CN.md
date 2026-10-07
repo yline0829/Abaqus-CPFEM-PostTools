@@ -19,7 +19,7 @@
 
 **[下载最新版本](https://github.com/yline0829/ODB2VTU-S/releases/latest)**
 
-当前提供（现有 v0.1.0 Release 仍保留首次发布时的旧文件名；后续版本将统一采用 ODB2VTU-S 命名）：
+当前 Release 安装包已统一采用 **ODB2VTU-S** 命名：
 
 - **Windows — ODB2VTU-S Exporter 数据导出器**
 - **Windows — ODB2VTU-S CPFEM Postprocessor**
@@ -202,7 +202,7 @@ python scripts/build_release.py
 
 ## 开发状态
 
-当前为首个公开源码版本 `v0.1.0`。项目最初来源于内部科研后处理工作流，目前正在逐步泛化和完善。
+当前版本为 **v0.1.1**，重点完成 ODB2VTU-S 命名统一以及 Linux GUI 的选择摘要、实时日志和完成/失败提示优化。项目最初来源于内部科研后处理工作流，目前正在逐步泛化和完善。
 
 如果遇到 Abaqus 版本兼容、特定单元类型、场变量映射或工作流问题，欢迎通过 GitHub **Issues** 提交。
 
