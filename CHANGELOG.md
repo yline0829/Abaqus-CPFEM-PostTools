@@ -2,13 +2,20 @@
 
 All notable changes will be documented in this file.
 
-## [Unreleased]
+## [0.1.1] - 2026-10-07
 
 ### Changed
 - Project branding standardized as **ODB2VTU-S** (`S = Selective`).
 - Application names standardized as **ODB2VTU-S Exporter** and **ODB2VTU-S CPFEM Postprocessor**.
-- Automatic output directory renamed from `ADE_Output` to `ODB2VTU_Output` for future builds.
-- Future release asset names use the ODB2VTU-S naming scheme.
+- Automatic output directory renamed from `ADE_Output` to `ODB2VTU_Output`.
+- Windows launchers, Linux desktop entries, installer paths, and release asset names aligned with the ODB2VTU-S naming scheme.
+- Repository links updated after the repository was renamed to `yline0829/ODB2VTU-S`.
+
+### Added
+- Linux Exporter now includes a dedicated **Selection Summary** panel showing ODB, instance/region, selected Step/Frame states, fields, derived fields, and output path.
+- Linux Exporter now includes a dedicated **Output Messages** panel with clear-log control.
+- Real-time Linux backend logging via `PYTHONUNBUFFERED=1`.
+- Explicit success/failure dialogs for VTU/PVD export, Curve Data export, and Field Analysis.
 
 ## [0.1.0] - 2026-10-06
 
