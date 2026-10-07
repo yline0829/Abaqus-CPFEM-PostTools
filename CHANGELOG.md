@@ -16,6 +16,8 @@ All notable changes will be documented in this file.
 - Linux Exporter now includes a dedicated **Output Messages** panel with clear-log control.
 - Real-time Linux backend logging via `PYTHONUNBUFFERED=1`.
 - Explicit success/failure dialogs for VTU/PVD export, Curve Data export, and Field Analysis.
+- Scrollable Linux panels for smaller displays (ODB → VTU/PVD, Curve Data, and Field Analysis).
+- Dedicated desktop icons: ODB→VTU visualization for **Exporter** and a curve-analysis icon for **CPFEM Postprocessor**.
 
 ## [0.1.0] - 2026-10-06
 

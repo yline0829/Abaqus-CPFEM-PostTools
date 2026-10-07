@@ -27,6 +27,7 @@ wde = work/'ODB2VTU-S_Exporter_Windows_Portable'
 reset(wde)
 cp_tree(ROOT/'src/data_exporter/windows', wde)
 cp_tree(ROOT/'src/data_exporter/backend', wde)
+cp_tree(ROOT/'assets/icons', wde/'icons')
 zipdir(wde, DIST/f'ODB2VTU-S_Exporter_Windows_Portable_v{VERSION}.zip')
 
 # Windows Postprocess
@@ -34,6 +35,7 @@ wpp = work/'ODB2VTU-S_CPFEM_Postprocessor_Windows_Portable'
 reset(wpp)
 cp_tree(ROOT/'src/postprocess/windows', wpp)
 cp_tree(ROOT/'src/postprocess/backend', wpp)
+cp_tree(ROOT/'assets/icons', wpp/'icons')
 zipdir(wpp, DIST/f'ODB2VTU-S_CPFEM_Postprocessor_Windows_Portable_v{VERSION}.zip')
 
 # Linux combined
@@ -45,6 +47,7 @@ cp_tree(ROOT/'src/data_exporter/linux', lin/'ODB2VTU-S_Exporter_Linux')
 cp_tree(ROOT/'src/data_exporter/backend', lin/'ODB2VTU-S_Exporter_Linux')
 cp_tree(ROOT/'src/postprocess/linux', lin/'ODB2VTU-S_CPFEM_Postprocessor_Linux')
 cp_tree(ROOT/'src/postprocess/backend', lin/'ODB2VTU-S_CPFEM_Postprocessor_Linux')
+cp_tree(ROOT/'assets/icons', lin/'icons')
 shutil.copy2(ROOT/'packaging/linux/install_clickable.sh', lin/'install_clickable.sh')
 shutil.copy2(ROOT/'packaging/linux/uninstall_clickable.sh', lin/'uninstall_clickable.sh')
 # The combined installer in release root uses its own directory as source root.

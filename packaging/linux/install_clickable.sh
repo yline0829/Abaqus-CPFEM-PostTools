@@ -8,11 +8,13 @@ if command -v xdg-user-dir >/dev/null 2>&1; then DESKTOP="$(xdg-user-dir DESKTOP
 if [ -z "$DESKTOP" ] || [ "$DESKTOP" = "$HOME" ]; then
   if [ -d "$HOME/桌面" ]; then DESKTOP="$HOME/桌面"; else DESKTOP="$HOME/Desktop"; fi
 fi
-mkdir -p "$PREFIX/data_exporter" "$PREFIX/postprocess" "$APPS" "$DESKTOP"
+mkdir -p "$PREFIX/data_exporter" "$PREFIX/postprocess" "$PREFIX/icons" "$APPS" "$DESKTOP"
+if [ -d "$SRC/assets/icons" ]; then ICON_SRC="$SRC/assets/icons"; else ICON_SRC="$SRC/icons"; fi
 cp -a "$SRC/src/data_exporter/linux/." "$PREFIX/data_exporter/"
 cp -a "$SRC/src/data_exporter/backend/." "$PREFIX/data_exporter/"
 cp -a "$SRC/src/postprocess/linux/." "$PREFIX/postprocess/"
 cp -a "$SRC/src/postprocess/backend/." "$PREFIX/postprocess/"
+cp -a "$ICON_SRC/." "$PREFIX/icons/"
 chmod +x "$PREFIX/data_exporter/launch.sh" "$PREFIX/postprocess/launch.sh"
 cat > "$APPS/odb2vtu-s-exporter.desktop" <<EOF
 [Desktop Entry]
@@ -20,7 +22,7 @@ Version=1.0
 Type=Application
 Name=ODB2VTU-S Exporter
 Exec=$PREFIX/data_exporter/launch.sh
-Icon=applications-science
+Icon=$PREFIX/icons/odb2vtu-s-exporter.png
 Terminal=false
 Categories=Science;Engineering;
 StartupNotify=true
@@ -31,7 +33,7 @@ Version=1.0
 Type=Application
 Name=ODB2VTU-S CPFEM Postprocessor
 Exec=$PREFIX/postprocess/launch.sh
-Icon=applications-science
+Icon=$PREFIX/icons/odb2vtu-s-cpfem-postprocessor.png
 Terminal=false
 Categories=Science;Engineering;
 StartupNotify=true

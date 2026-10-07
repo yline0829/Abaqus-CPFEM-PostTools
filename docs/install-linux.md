@@ -48,3 +48,13 @@ Uninstall:
 ```
 
 Uninstalling removes only program files and shortcuts, not ODB/INP/results.
+
+
+## Desktop icons
+
+The Linux installer creates two desktop shortcuts with distinct icons:
+
+- **ODB2VTU-S Exporter** — ODB → VTU visualization icon
+- **ODB2VTU-S CPFEM Postprocessor** — curve/data-analysis icon
+
+Running the installer again safely refreshes the installed program files and desktop shortcuts.
